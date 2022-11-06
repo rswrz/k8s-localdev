@@ -1,0 +1,80 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 99g
+  name: startpage
+spec:
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - backend:
+              service:
+                name: startpage
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: startpage
+  name: startpage
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+  selector:
+    app: startpage
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: startpage
+  name: startpage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: startpage
+  serviceName: startpage
+  template:
+    metadata:
+      labels:
+        app: startpage
+    spec:
+      containers:
+        - image: nginx:latest
+          imagePullPolicy: IfNotPresent
+          name: startpage
+          ports:
+            - containerPort: 80
+              name: web
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: htdocs
+      volumes:
+        - configMap:
+            name: startpage
+          name: htdocs
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: startpage
+data:
+  index.html: |-
+    <ul>
+      <li><a href="http://git.localhost">http://git.localhost</a></li>
+      <li><a href="http://registry.localhost">http://registry.localhost</a></li>
+      <li><a href="http://k8s.localhost">http://k8s.localhost</a></li>
+    </ul>

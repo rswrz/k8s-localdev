@@ -1,0 +1,7 @@
+---
+resources:
+  - nginx.yaml
+  - startpage.yaml
+  - kubernetes-dashboard.yaml
+  - registry.yaml
+  - git.yaml
