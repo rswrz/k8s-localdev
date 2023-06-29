@@ -72,6 +72,18 @@ provision:
 
 ## Flux deployment
 
+### Install
+
+```sh
+kubectl exec git-0 -- git-init k8s-localdev
+git remote add local http://git.localhost/k8s-localdev.git
+git push local main
+```
+
+```sh
+kubectl apply -k flux/flux-system
+```
+
 ### Bootstrap
 
 Prepare the local repository
