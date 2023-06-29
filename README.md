@@ -94,6 +94,12 @@ git remote add local http://git.localhost/k8s-localdev.git
 git push local main
 ```
 
+Install Flux CLI in a explicit version
+
+```sh
+curl -s https://fluxcd.io/install.sh | FLUX_VERSION=0.41.2 bash -s -- ~/.local/bin
+```
+
 Flux needs a password, create a dummy.
 
 ```sh
