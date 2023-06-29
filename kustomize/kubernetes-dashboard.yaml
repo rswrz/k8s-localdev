@@ -15,6 +15,7 @@ spec:
     - "--enable-insecure-login"
     - "--insecure-bind-address=0.0.0.0"
     ingress:
+      className: nginx
       enabled: true
       hosts:
       - k8s.localhost
