@@ -15,12 +15,6 @@
 
 ## Quick start
 
-Build git container image
-
-```sh
-docker build -t git ./containers/git
-```
-
 Apply all manifest files
 
 ```sh
